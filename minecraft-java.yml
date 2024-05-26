@@ -1,0 +1,106 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: minecraft-java
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: minecraft-java
+  name: minecraft-java
+  namespace: minecraft-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft-java
+  template:
+    metadata:
+      labels:
+        app: minecraft-java
+        name: minecraft-java
+    spec:
+      containers:
+        - name: minecraft-java
+          image: itzg/minecraft-server:java8
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+          ports:
+          - name: minecraft-java
+            containerPort: 25565
+            hostPort: 25565
+            protocol: TCP
+          env:
+            - name: EULA
+              value: "TRUE"
+            - name: ALLOW_FLIGHT
+              value: "TRUE"
+            - name: DIFFICULTY
+              value: "easy" #peaceful, easy, normal, hard
+            - name: ENABLE_RCON
+              value: "false"
+            - name: GENERATE_STRUCTURES
+              value: "true"
+                #- name: MOD_PLATFORM
+                #  value: "AUTO_CURSEFORGE"
+                #- name: CF_API_KEY
+                #  value: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                #- name: CF_PAGE_URL
+                #- name: MODPACK
+                #  value: "The-Pixelmon-Modpack-9.2.8.zip"
+            - name: MOTD
+              value: "Minecraft Pixelmon"
+            - name: OPS
+              value: "whitelist"
+            - name: WHITELIST
+              value: "xxxxxxxxx-xxxxxxxxx-xxxxxxxxx-xxxxxx-xxx"
+            - name: ENABLE_WHITELIST
+              value: "TRUE"
+            - name: ONLINE_MODE
+              value: "TRUE"
+                #- name: REMOVE_OLD_MODS
+                # value: "TRUE"
+            - name: TYPE
+              value: "FORGE"
+            - name: VERSION
+              value: "1.16.5"
+          volumeMounts:
+          - name: minecraft-java-data-world-volume
+            mountPath: "/data/world"
+          - name: minecraft-java-data-mods-volume
+            mountPath: "/data/mods"
+          - name: minecraft-java-data-modpacks-volume
+            mountPath: "/data/modpacks"
+      volumes:
+      - name: minecraft-java-data-world-volume
+        hostPath:
+         path: "/app/minecraft/data/world"
+      - name: minecraft-java-data-mods-volume
+        hostPath:
+         path: "/app/minecraft/data/mods"
+      - name: minecraft-java-data-modpacks-volume
+        hostPath:
+         path: "/app/minecraft/data/modpacks"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minecraft-java
+spec:
+  selector:
+    app: minecraft-java
+  ports:
+    - port: 25565
+      protocol: TCP
+      targetPort: 25565
+  externalIPs:
+    - xxx.xxx.xxx.xxx
