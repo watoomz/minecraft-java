@@ -21,5 +21,7 @@ Change minecraft version to desired version eg:
  - name: VERSION
    value: "1.16.5"
 
+Place any server mods in /app/data/mods
+
 Deploy:
 #kubectl apply -f minecraft-java.yml
