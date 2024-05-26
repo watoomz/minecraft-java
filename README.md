@@ -20,3 +20,6 @@ Change external IP to be the host running k3s
 Change minecraft version to desired version eg:
  - name: VERSION
    value: "1.16.5"
+
+Deploy:
+#kubectl apply -f minecraft-java.yml
