@@ -53,7 +53,7 @@ spec:
             - name: MOTD
               value: "Minecraft Pixelmon"
             - name: OPS
-              value: "whitelist"
+              value: "xxxxxxxxx-xxxxxxxxx-xxxxxxxxx-xxxxxx-xxx"
             - name: WHITELIST
               value: "xxxxxxxxx-xxxxxxxxx-xxxxxxxxx-xxxxxx-xxx"
             - name: ENABLE_WHITELIST
