@@ -17,6 +17,8 @@ https://docker-minecraft-server.readthedocs.io/en/latest/versions/java/
 
 Change external IP to be the host running k3s
 
+Change OPS and Whitelist value to be your UUID
+
 Change minecraft version to desired version eg:
  - name: VERSION
    value: "1.16.5"
