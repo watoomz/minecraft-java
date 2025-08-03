@@ -1,4 +1,4 @@
-Deplys minecraft java server using k3s
+Deploys minecraft java server using k3s
 
 Install k3s:
   curl -sfL https://get.k3s.io | sh -
