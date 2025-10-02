@@ -2,42 +2,42 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: minecraft-zom
+  name: minecraft-pixel
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: minecraft-zom
-  name: minecraft-zom
-  namespace: minecraft-zom
+    app: minecraft-pixel
+  name: minecraft-pixel
+  namespace: minecraft-pixel
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: minecraft-zom
+      app: minecraft-pixel
   template:
     metadata:
       labels:
-        app: minecraft-zom
-        name: minecraft-zom
+        app: minecraft-pixel
+        name: minecraft-pixel
     spec:
       containers:
-        - name: minecraft-zom
-          image: itzg/minecraft-server:java21
+        - name: minecraft-pixel
+          image: itzg/minecraft-server:java8
           imagePullPolicy: Always
           resources:
             limits:
               cpu: "4"
-              memory: "8Gi"
+              memory: "6Gi"
             requests:
               cpu: "2"
-              memory: "6Gi"
+              memory: "4Gi"
           ports:
-          - name: minecraft-zom
+          - name: minecraft-pixel
             containerPort: 25565
-            hostPort: 25566
+            hostPort: 25565
             protocol: TCP
           env:
             - name: EULA
@@ -51,57 +51,53 @@ spec:
             - name: GENERATE_STRUCTURES
               value: "true"
             - name: MOTD
-              value: "Minecraft Zombies!"
+              value: "Minecraft Pixelmon"
             - name: OPS
-              value: "1490331b-e5fb-42fe-b292-6c7646ffd009"
+              value: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
             - name: WHITELIST
-              value: "1490331b-e5fb-42fe-b292-6c7646ffd009"
-              value: "4277ee50-92e5-4bfc-b52f-f8f0bc8c79d5"
+              value: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
             - name: ENABLE_WHITELIST
               value: "TRUE"
             - name: ONLINE_MODE
               value: "TRUE"
-            - name: MAX-TICK-TIME
-              value: "-1"
-            - name: VIEW-DISTANCE
-              value: "8"
                 #- name: REMOVE_OLD_MODS
                 # value: "TRUE"
             - name: TYPE
               value: "FORGE"
             - name: VERSION
-              value: "1.20.1"
+              value: "1.16.5"
             - name: MEMORY
               value: ""
             - name: JVM_XX_OPTS
-              value: "-XX:MaxRAMPercentage=75"
+              value: "-XX:+UseContainerSupport"
+              value: "-XX:MaxRAMPercentage=75.0"
           volumeMounts:
-          - name: minecraft-zom-data-world-volume
+          - name: minecraft-java-data-world-volume
             mountPath: "/data/world"
-          - name: minecraft-zom-data-mods-volume
+          - name: minecraft-java-data-mods-volume
             mountPath: "/data/mods"
-          - name: minecraft-zom-data-modpacks-volume
+          - name: minecraft-java-data-modpacks-volume
             mountPath: "/data/modpacks"
       volumes:
-      - name: minecraft-zom-data-world-volume
+      - name: minecraft-java-data-world-volume
         hostPath:
-         path: "/app/minecraft-zombies/data/world"
-      - name: minecraft-zom-data-mods-volume
+         path: "/app/minecraft/data/world"
+      - name: minecraft-java-data-mods-volume
         hostPath:
-         path: "/app/minecraft-zombies/data/mods"
-      - name: minecraft-zom-data-modpacks-volume
+         path: "/app/minecraft/data/mods"
+      - name: minecraft-java-data-modpacks-volume
         hostPath:
-         path: "/app/minecraft-zombies/data/modpacks"
+         path: "/app/minecraft/data/modpacks"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: minecraft-zom
+  name: minecraft-pixel
 spec:
   selector:
-    app: minecraft-zom
+    app: minecraft-pixel
   ports:
-    - port: 25566
+    - port: 25565
       protocol: TCP
       targetPort: 25565
   externalIPs:
